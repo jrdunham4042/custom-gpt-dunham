@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom ChatGPT Interface</title>
+</head>
+<body>
+    <h1>Custom ChatGPT Interface</h1>
+    <form id="prompt-form">
+        <label for="prompt">Enter your prompt:</label><br>
+        <input type="text" id="prompt" name="prompt"><br><br>
+        <input type="submit" value="Generate">
+    </form>
+    <h2>Response:</h2>
+    <pre id="response"></pre>
+
+    <script>
+        document.getElementById('prompt-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const prompt = document.getElementById('prompt').value;
+            const responseElement = document.getElementById('response');
+            responseElement.textContent = 'Loading...';
+
+            const response = await fetch('/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ prompt })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                responseElement.textContent = data.generated_text;
+            } else {
+                responseElement.textContent = 'Error: ' + response.statusText;
+            }
+        });
+    </script>
+</body>
+</html>
