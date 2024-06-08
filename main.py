@@ -19,16 +19,16 @@ class Prompt(BaseModel):
 async def generate_text(prompt: Prompt):
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",  # or your custom model name
+            model="gpt-3.5-turbo",  # Use a model suitable for your needs
             messages=[
                 {"role": "system", "content": "You are a helpful assistant."},
                 {"role": "user", "content": prompt.prompt}
             ],
-            max_tokens=50  # Reduce token usage
+            max_tokens=50  # Reduce token usage to stay within free tier limits
         )
         generated_text = response['choices'][0]['message']['content'].strip()
         return {"generated_text": generated_text}
-    except Exception as e:
+    except openai.error.OpenAIError as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/")
