@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 import openai
 import os
@@ -29,4 +30,4 @@ async def generate_text(prompt: Prompt):
 
 @app.get("/")
 async def read_root():
-    return {"message": "Hello, World!"}
+    return FileResponse('index.html')
