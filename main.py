@@ -20,7 +20,7 @@ async def generate_text(prompt: Prompt):
                 {"role": "system", "content": "You are a helpful assistant."},
                 {"role": "user", "content": prompt.prompt}
             ],
-            max_tokens=30  # Reduce token usage
+            max_tokens=30  # Adjust token usage as needed
         )
         generated_text = response['choices'][0]['message']['content'].strip()
         return {"generated_text": generated_text}
