@@ -1,5 +1,5 @@
 fastapi
 pydantic
 openai
-uvicorn
-starlette
+uvicorn[standard]
+
