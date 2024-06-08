@@ -1,11 +1,16 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import openai
+import os
 
 app = FastAPI()
 
-# Set your OpenAI API key
-openai.api_key = "your_openai_api_key"
+# Get your OpenAI API key from the environment variable
+openai_api_key = os.getenv("OPENAI_API_KEY")
+if not openai_api_key:
+    raise ValueError("OpenAI API key is not set")
+
+openai.api_key = openai_api_key
 
 class Prompt(BaseModel):
     prompt: str
