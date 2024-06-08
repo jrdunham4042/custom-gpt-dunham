@@ -33,8 +33,6 @@ paths:
                   generated_text:
                     type: string
                     example: "Why don't scientists trust atoms? Because they make up everything!"
-        '429':
-          description: Too Many Requests - Rate limit exceeded
         '500':
           description: Internal Server Error
   /:
