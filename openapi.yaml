@@ -1,0 +1,55 @@
+openapi: 3.0.0
+info:
+  title: Custom GPT API
+  description: API for generating text using OpenAI's GPT model.
+  version: 1.0.0
+servers:
+  - url: https://custom-gpt-dunham.vercel.app
+    description: Main (production) server
+paths:
+  /generate:
+    post:
+      operationId: generateText
+      summary: Generate text based on a prompt
+      description: Generates text using OpenAI's GPT-3.5-turbo model based on the provided prompt.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt:
+                  type: string
+                  example: "Tell me a joke."
+      responses:
+        '200':
+          description: Generated text
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  generated_text:
+                    type: string
+                    example: "Why don't scientists trust atoms? Because they make up everything!"
+        '429':
+          description: Too Many Requests - Rate limit exceeded
+        '500':
+          description: Internal Server Error
+  /:
+    get:
+      operationId: readRoot
+      summary: Root endpoint
+      description: Returns a simple "Hello, World!" message.
+      responses:
+        '200':
+          description: A simple message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Hello, World!"
