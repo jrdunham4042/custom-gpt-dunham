@@ -18,12 +18,15 @@ class Prompt(BaseModel):
 @app.post("/generate")
 async def generate_text(prompt: Prompt):
     try:
-        response = openai.Completion.create(
-            engine="text-davinci-003",  # or your custom model name
-            prompt=prompt.prompt,
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",  # or your custom model name
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": prompt.prompt}
+            ],
             max_tokens=150  # Adjust as needed
         )
-        generated_text = response.choices[0].text.strip()
+        generated_text = response['choices'][0]['message']['content'].strip()
         return {"generated_text": generated_text}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
